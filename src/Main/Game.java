@@ -6,9 +6,11 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
-public class Game extends JPanel implements Runnable, KeyListener {
+public class Game extends JPanel implements Runnable, KeyListener, MouseListener {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -50,6 +52,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
 
     /**
      * This method holds the primary game loop.
+     * It runs as a thread which is constructed from this runnable class
      */
     public void run() {
         init();
@@ -59,12 +62,15 @@ public class Game extends JPanel implements Runnable, KeyListener {
         // **** MAIN GAME LOOP **** //
         while (running) {
 
+            // Timestamp the beginning of the game loop
             begin = System.currentTimeMillis();
+
 
             update();
             draw(graphics);
             drawJPanel();
 
+            // Sleep for a variable amount of time to hold a constant framerate.
             sleep(begin);
 
         }
@@ -78,10 +84,13 @@ public class Game extends JPanel implements Runnable, KeyListener {
      * @param begin The time the current game loop iteration started, in milliseconds
      */
     private void sleep(long begin){
+        // Get time elapsed since the game loop started.
         long elapsed = System.currentTimeMillis() - begin;
+        // Get the amount of time left to complete a constant draw interval
         long difference = drawIntervalInMilli - elapsed;
         if(difference > 0) {
             try {
+                // Wait for that amount of time.
                 Thread.sleep(difference);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -94,6 +103,8 @@ public class Game extends JPanel implements Runnable, KeyListener {
         gameStateManager = new GameStateManager();
         screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         graphics = (Graphics2D) screen.getGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        graphics.setColor(Color.BLACK);
     }
 
     private void update(){
@@ -110,13 +121,41 @@ public class Game extends JPanel implements Runnable, KeyListener {
         jPanelGraphics.dispose();
     }
 
+    @Override
     public void keyTyped(KeyEvent e) {}
 
+    @Override
     public void keyPressed(KeyEvent e) {
         gameStateManager.keyPressed(e.getKeyCode());
     }
 
+    @Override
     public void keyReleased(KeyEvent e) {
         gameStateManager.keyReleased(e.getKeyCode());
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        gameStateManager.mouseClicked(e);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }
