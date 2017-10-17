@@ -30,21 +30,13 @@ public class MainMenu extends GameState {
     private int menu;
     private int selectedOption;
 
-
-
     private BufferedImage background;
-    private Color highlight;
+    private Color highlightColor;
+    private Color baseColor
     private Font titleFont;
     private Font menuFont;
 
-
-    // Options
-    private boolean timer = false;
-    private boolean twoPlayer = false;
-
-
-
-
+    private Settings settings;
     private GameStateManager gameStateManager;
 
     public MainMenu(GameStateManager gameStateManager) {
@@ -57,94 +49,108 @@ public class MainMenu extends GameState {
             e.printStackTrace();
         }
 
-        highlight = new Color(100, 100, 100);
+        highlightColor = new Color(100, 100, 100);
+        baseColor = Color.BLACK;
         titleFont = new Font("Arial", Font.PLAIN, 72);
         menuFont = new Font("Arial", Font.PLAIN, 36);
     }
-
-
 
     @Override
     public void init() {
         selectedOption = 0;
         menu = HOME_MENU;
+        settings = new Settings();
     }
 
     @Override
-    public void update() {
+    public void update() { }
 
-    }
-
-
-    // MAIN MENU LOGIC
+    /**
+     * select() defines a logic tree for the main menu
+     */
     private void select() {
-        if (menu == HOME_MENU) {
-            switch (selectedOption) {
 
-                // NEW GAME
-                case 0:
-                    menu = NEW_GAME_MENU;
-                    selectedOption = 0;
-                    break;
+        switch (menu) {
 
-                // SETTINGS
-                case 1:
-                    menu = OPTIONS_MENU;
-                    selectedOption = 0;
-                    break;
+            case HOME_MENU:
+                switch (selectedOption) {
 
-                // QUIT
-                case 2:
+                    // NEW GAME
+                    case 0:
+                        menu = NEW_GAME_MENU;
+                        selectedOption = 0;
+                        break;
 
-                    System.exit(0);
-                    break;
-            }
-        } else if (menu == NEW_GAME_MENU) {
-            switch (selectedOption) {
+                    // SETTINGS
+                    case 1:
+                        menu = OPTIONS_MENU;
+                        selectedOption = 0;
+                        break;
 
-                // 1 Player
-                case 0:
-                    twoPlayer = false;
-                    // TODO: START A NEW GAME WITH CURRENT SETTINGS
-                    break;
+                    // QUIT
+                    case 2:
 
-                // 2 Player
-                case 1:
-                    twoPlayer = true;
-                    // TODO: START A NEW GAME WITH CURRENT SETTINGS
-                    break;
+                        System.exit(0);
+                        break;
+                }
+                break;
 
-                // BACK
-                case 2:
-                    menu = HOME_MENU;
-                    selectedOption = 0;
-                    break;
-            }
-        } else if (menu == OPTIONS_MENU) {
-            switch (selectedOption) {
+            case NEW_GAME_MENU:
+                switch (selectedOption) {
 
-                // TOGGLE TIMER
-                case 0:
-                    timer = !timer;
-                    String timerStr = timer ? "Timer On" : "Timer Off";
-                    options[menu][selectedOption] = timerStr;
-                    break;
+                    // 1 Player
+                    case 0:
+                        settings.setMultiPlayer(false);
+                        gameStateManager.getState(GameStateManager.CHESS_STATE).setSettings(settings);
+                        gameStateManager.setState(GameStateManager.CHESS_STATE);
+                        // TODO: START A NEW GAME WITH CURRENT SETTINGS
+                        break;
 
-                // TODO: FIGURE OUT WHAT OPTIONS WE WANT
-                // TBD
-                case 1:
-                    // NOTHING YET
-                    break;
+                    // 2 Player
+                    case 1:
+                        settings.setMultiPlayer(true);
+                        gameStateManager.getState(GameStateManager.CHESS_STATE).setSettings(settings);
+                        gameStateManager.setState(GameStateManager.CHESS_STATE);
+                        // TODO: START A NEW GAME WITH CURRENT SETTINGS
+                        break;
 
-                // BACK
-                case 2:
-                    menu = HOME_MENU;
-                    selectedOption = 0;
-                    break;
-            }
-        } else {
-            System.out.println("ERROR: Out of bounds menu index... Resetting back to home");
-            menu = HOME_MENU;
+                    // BACK
+                    case 2:
+                        menu = HOME_MENU;
+                        selectedOption = 0;
+                        break;
+                }
+                break;
+
+            case OPTIONS_MENU:
+                switch (selectedOption) {
+
+                    // TOGGLE TIMER
+                    case 0:
+                        settings.setHasTimer(!settings.hasTimer());
+                        String timerStr = settings.hasTimer() ? "Timer On" : "Timer Off";
+                        options[menu][selectedOption] = timerStr;
+                        break;
+
+                    // TODO: FIGURE OUT WHAT OPTIONS WE WANT
+                    // TBD
+                    case 1:
+                        // NOTHING YET
+                        break;
+
+                    // BACK
+                    case 2:
+                        menu = HOME_MENU;
+                        selectedOption = 0;
+                        break;
+                }
+                break;
+
+            default:
+                System.out.println("ERROR: Out of bounds menu index... Resetting back to home");
+                menu = HOME_MENU;
+                break;
+
         }
     }
 
@@ -164,15 +170,16 @@ public class MainMenu extends GameState {
         for (int i = 0; i < options[menu].length; i++) {
 
             if (i == selectedOption) {
-                g.setColor(highlight);
+                g.setColor(highlightColor);
             } else {
-                g.setColor(Color.BLACK);
+                g.setColor(baseColor);
             }
 
             width = menuFontMetrics.stringWidth(options[menu][i]);
             xPos = Game.WIDTH / 2 - (width / 2);
             g.drawString(options[menu][i], xPos, Game.HEIGHT/2 + (i*interval));
         }
+        g.setColor(baseColor);
     }
 
     @Override
@@ -200,4 +207,6 @@ public class MainMenu extends GameState {
     public void keyReleased(int k) {
 
     }
+
+
 }

@@ -4,8 +4,6 @@ import java.awt.*;
 
 public class ChessGame extends GameState {
 
-
-
     private GameStateManager gameStateManager;
 
     public ChessGame(GameStateManager gameStateManager) {
@@ -14,12 +12,12 @@ public class ChessGame extends GameState {
 
     @Override
     public void init() {
-
+        System.out.println("Inside Chess Game!");
     }
 
     @Override
     public void update() {
-
+        System.out.println("Updating Chess Game! \t " + settings.getNumPlayers());
     }
 
     @Override
