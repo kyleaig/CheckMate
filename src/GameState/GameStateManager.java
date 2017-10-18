@@ -17,7 +17,7 @@ public class GameStateManager {
 
         gameStates.add(new MainMenu(this));
         gameStates.add(new ChessGame(this));
-        setState(0);
+        setState(1);
     }
 
     public void setState(int newState) {
@@ -46,6 +46,10 @@ public class GameStateManager {
     }
 
     public void mouseClicked(MouseEvent e) {
-        // TODO: Pass mouse event parameters to game state
+        gameStates.get(currentState).mouseClicked(e);
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        gameStates.get(currentState).mouseMoved(e);
     }
 }

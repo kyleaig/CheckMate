@@ -4,13 +4,10 @@ import GameState.GameStateManager;
 
 import javax.swing.JPanel;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-public class Game extends JPanel implements Runnable, KeyListener, MouseListener {
+public class Game extends JPanel implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -43,6 +40,8 @@ public class Game extends JPanel implements Runnable, KeyListener, MouseListener
 
             // This sets up the key listener
             addKeyListener(this);
+            addMouseListener(this);
+            addMouseMotionListener(this);
 
             // This actually starts the run method on the thread.
             thread = new Thread(this);
@@ -157,5 +156,15 @@ public class Game extends JPanel implements Runnable, KeyListener, MouseListener
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        gameStateManager.mouseMoved(e);
     }
 }

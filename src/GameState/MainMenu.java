@@ -5,11 +5,12 @@ import Main.Game;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 public class MainMenu extends GameState {
 
-    private static final String backgroundPath = "/MainMenuBg.png";
+    private static final String backgroundPath = "/Backgrounds/MainMenuBg.png";
     private static final String title = "Check Mate";
 
     private static final int HOME_MENU = 0;
@@ -32,7 +33,7 @@ public class MainMenu extends GameState {
 
     private BufferedImage background;
     private Color highlightColor;
-    private Color baseColor
+    private Color baseColor;
     private Font titleFont;
     private Font menuFont;
 
@@ -206,6 +207,16 @@ public class MainMenu extends GameState {
     @Override
     public void keyReleased(int k) {
 
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        // TODO: DETECT MOUSE OVER OPTIONS
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // TODO: ALLOW MOUSE TO SELECT OPTIONS
     }
 
 
