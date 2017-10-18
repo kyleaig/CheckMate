@@ -29,6 +29,8 @@ public class ChessGame extends GameState {
     @Override
     public void update() {
 
+        // Handles things like turns
+
     }
 
     @Override
@@ -38,20 +40,17 @@ public class ChessGame extends GameState {
         g.fillRect(0,0, Game.WIDTH, Game.HEIGHT);
         chessBoard.draw(g);
 
-
-
-
     }
 
 
     @Override
     public void keyPressed(int k) {
-
+        // Unsure if these are even necessary
     }
 
     @Override
     public void keyReleased(int k) {
-
+        // Unsure if these are even necessary
     }
 
     @Override
@@ -61,7 +60,7 @@ public class ChessGame extends GameState {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // Nothing yet
+        chessBoard.click();
     }
 
 

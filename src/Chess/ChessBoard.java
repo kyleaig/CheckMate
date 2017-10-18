@@ -10,66 +10,70 @@ import java.awt.image.BufferedImage;
 
 public class ChessBoard {
 
-    private static final String chessBoardImagePath = "/Chess/ChessBoard.png";
+    private static final String BASE_PATH = "/Chess/";
+    private static final int TILE_WIDTH = 11;
 
     private BufferedImage board;
+    private BufferedImage highlight;
     private int offsetX;
     private int offsetY;
 
     private int highlightX;
     private int highlightY;
 
-
-
     public ChessBoard() {
 
-
         try {
-
-            board = ImageIO.read(getClass().getResourceAsStream(chessBoardImagePath));
-
+            board = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "ChessBoard.png"));
+            highlight = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "Highlight.png"));
         } catch (Exception e) {
-
             e.printStackTrace();
-
         }
 
-        offsetX = Game.WIDTH / 2;
-        offsetY = Game.HEIGHT / 5;
+        offsetX = Game.WIDTH / 2 - (board.getWidth() * ChessGame.SCALE) /  2;
+        offsetY = Game.HEIGHT / 2 - (board.getHeight() * ChessGame.SCALE) / 2;
 
         highlightX = -1;
         highlightY = -1;
-
     }
 
     public void draw(Graphics2D g) {
+        g.drawImage(
+                board,
+                offsetX,
+                offsetY,
+                board.getWidth() * ChessGame.SCALE,
+                board.getHeight() * ChessGame.SCALE,
+                null);
 
-        g.drawImage(board, offsetX, offsetY, board.getWidth() * ChessGame.SCALE, board.getHeight() * ChessGame.SCALE,null);
-
-
+        if (highlightX != -1 && highlightY != -1) {
+            g.drawImage(
+                    highlight,
+                    offsetX + TILE_WIDTH * ChessGame.SCALE * highlightX,
+                    offsetY + TILE_WIDTH * ChessGame.SCALE * highlightY,
+                    highlight.getWidth() * ChessGame.SCALE,
+                    highlight.getHeight() * ChessGame.SCALE,
+                    null);
+        }
     }
 
     public void mouseMoved(MouseEvent e) {
-        int xPos = e.getX();
-        int yPos = e.getY();
-
-        //System.out.println("X: " + xPos + "\t Y: " + yPos);
-
-        xPos -= offsetX;
-        yPos -= offsetY;
+        int xPos = e.getX() - offsetX;
+        int yPos = e.getY() - offsetY;
 
         if (xPos > 0 && yPos > 0) {
-            highlightX = xPos / 44;
-            highlightY = yPos / 44;
+            highlightX = xPos / (ChessGame.SCALE * TILE_WIDTH);
+            highlightY = yPos / (ChessGame.SCALE * TILE_WIDTH);
+            if (highlightY > 7 || highlightX > 7) {
+                highlightY = highlightX = -1;
+            }
         } else {
             highlightY = highlightX = -1;
         }
+    }
 
-        if (highlightY > 7 || highlightX > 7) {
-            highlightY = highlightX = -1;
-        }
-
-        System.out.println("X: " + highlightX + "\t Y: " + highlightY);
-
+    public void click() {
+        // TODO: Handle clicking on a chess piece
+        // Probably gonna need to wait to actually add chess pieces.
     }
 }

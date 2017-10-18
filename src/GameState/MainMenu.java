@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 
 public class MainMenu extends GameState {
 
-    private static final String backgroundPath = "/Backgrounds/MainMenuBg.png";
+    // private static final String backgroundPath = "/Backgrounds/MainMenuBg.png";
     private static final String title = "Check Mate";
 
     private static final int HOME_MENU = 0;
@@ -45,7 +45,7 @@ public class MainMenu extends GameState {
         this.gameStateManager = gameStateManager;
 
         try {
-            background = ImageIO.read(getClass().getResourceAsStream(backgroundPath));
+            // background = ImageIO.read(getClass().getResourceAsStream(backgroundPath));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -151,14 +151,17 @@ public class MainMenu extends GameState {
                 System.out.println("ERROR: Out of bounds menu index... Resetting back to home");
                 menu = HOME_MENU;
                 break;
-
         }
     }
 
 
     @Override
     public void draw(Graphics2D g) {
-        g.drawImage(background, 0, 0, null);
+
+        // TODO: Clean this shit up
+        // g.drawImage(background, 0, 0, null);
+
+        g.setColor(baseColor);
         g.setFont(titleFont);
         FontMetrics titleFontMetrics = g.getFontMetrics(titleFont);
         int width = titleFontMetrics.stringWidth(title);
@@ -201,7 +204,6 @@ public class MainMenu extends GameState {
 
                 break;
         }
-
     }
 
     @Override

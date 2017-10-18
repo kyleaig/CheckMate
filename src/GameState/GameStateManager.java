@@ -17,7 +17,7 @@ public class GameStateManager {
 
         gameStates.add(new MainMenu(this));
         gameStates.add(new ChessGame(this));
-        setState(1);
+        setState(0);
     }
 
     public void setState(int newState) {

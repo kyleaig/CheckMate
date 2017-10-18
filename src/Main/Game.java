@@ -111,6 +111,11 @@ public class Game extends JPanel implements Runnable, KeyListener, MouseListener
     }
 
     private void draw(Graphics2D graphics) {
+
+        // THIS REFRESHES THE SCREEN
+        graphics.setColor(Color.WHITE);
+        graphics.fillRect(0,0, Game.WIDTH, Game.HEIGHT);
+
         gameStateManager.draw(graphics);
     }
 
