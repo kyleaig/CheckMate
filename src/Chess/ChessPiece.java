@@ -13,6 +13,7 @@ public abstract class ChessPiece {
 		7. 
 		
 		More Code....
+		Another test
 		
 	*/
 }
