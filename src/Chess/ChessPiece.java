@@ -14,6 +14,7 @@ public abstract class ChessPiece {
 		
 		More Code....
 		Another test
-		
+
+		This should produce a conflict
 	*/
 }
