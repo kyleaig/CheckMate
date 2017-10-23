@@ -26,6 +26,7 @@ public class Game extends JPanel implements Runnable, KeyListener, MouseListener
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setFocusable(true);
         requestFocus();
+        gameStateManager = new GameStateManager();
     }
 
     /**
@@ -98,8 +99,8 @@ public class Game extends JPanel implements Runnable, KeyListener, MouseListener
     }
 
     private void init() {
+    	System.out.println("GSM: " + gameStateManager);
         running = true;
-        gameStateManager = new GameStateManager();
         screen = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         graphics = (Graphics2D) screen.getGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
