@@ -11,10 +11,5 @@ public abstract class ChessPiece {
 		5. capturePiece() (only if enemy piece)
 		6. move(Move m) (m is from list of available legal moves)
 		7. 
-		
-		More Code....
-		Another test
-
-		This should produce a conflict
 	*/
 }
