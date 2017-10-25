@@ -7,6 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class ChessBoard {
 
@@ -21,6 +22,10 @@ public class ChessBoard {
     private int highlightX;
     private int highlightY;
 
+    private ArrayList<ChessPiece> whitePieces;
+    private ArrayList<ChessPiece> blackPieces;
+
+
     public ChessBoard() {
 
         try {
@@ -30,11 +35,25 @@ public class ChessBoard {
             e.printStackTrace();
         }
 
+        whitePieces = new ArrayList<>();
+        blackPieces = new ArrayList<>();
+
         offsetX = Game.WIDTH / 2 - (board.getWidth() * ChessGame.SCALE) /  2;
         offsetY = Game.HEIGHT / 2 - (board.getHeight() * ChessGame.SCALE) / 2;
 
         highlightX = -1;
         highlightY = -1;
+
+        initBoard();
+    }
+
+    private void initBoard() {
+
+        for (int i = 0; i < 8; i++) {
+
+            whitePieces.add(new Pawn(i, 6));
+
+        }
     }
 
     public void draw(Graphics2D g) {
@@ -55,6 +74,18 @@ public class ChessBoard {
                     highlight.getHeight() * ChessGame.SCALE,
                     null);
         }
+
+        for (ChessPiece piece : whitePieces) {
+            BufferedImage img = piece.getIcon();
+            g.drawImage(
+                    img,
+                    offsetX + piece.getX() * TILE_WIDTH  * ChessGame.SCALE,
+                    offsetY + piece.getY() * TILE_WIDTH  * ChessGame.SCALE,
+                    img.getWidth() * ChessGame.SCALE,
+                    img.getHeight() * ChessGame.SCALE,
+                    null);
+        }
+
     }
 
     public void mouseMoved(MouseEvent e) {
