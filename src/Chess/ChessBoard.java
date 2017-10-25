@@ -75,5 +75,11 @@ public class ChessBoard {
     public void click() {
         // TODO: Handle clicking on a chess piece
         // Probably gonna need to wait to actually add chess pieces.
+
+        if (highlightX != -1 && highlightY != -1) {
+            System.out.println("Clicked tile  (" + (highlightX+1) + ", " + (highlightY+1) + ")");
+        } else {
+            System.out.println("Out of bounds");
+        }
     }
 }
