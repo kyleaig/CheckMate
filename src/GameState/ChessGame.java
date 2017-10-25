@@ -62,6 +62,4 @@ public class ChessGame extends GameState {
     public void mouseClicked(MouseEvent e) {
         chessBoard.click();
     }
-
-
 }
