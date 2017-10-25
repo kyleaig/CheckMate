@@ -1,5 +1,6 @@
 package Chess;
 
+import Chess.Pieces.*;
 import GameState.ChessGame;
 import Main.Game;
 
@@ -14,7 +15,7 @@ public class ChessBoard {
     private static final String BASE_PATH = "/Chess/";
     private static final int TILE_WIDTH = 11;
 
-    private BufferedImage board;
+    private BufferedImage boardImage;
     private BufferedImage highlight;
     private int offsetX;
     private int offsetY;
@@ -24,12 +25,12 @@ public class ChessBoard {
 
     private ArrayList<ChessPiece> whitePieces;
     private ArrayList<ChessPiece> blackPieces;
-
+    private ChessPiece[][] board = new ChessPiece[8][8];
 
     public ChessBoard() {
 
         try {
-            board = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "ChessBoard.png"));
+            boardImage = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "ChessBoard.png"));
             highlight = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "Highlight.png"));
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,8 +39,8 @@ public class ChessBoard {
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
 
-        offsetX = Game.WIDTH / 2 - (board.getWidth() * ChessGame.SCALE) /  2;
-        offsetY = Game.HEIGHT / 2 - (board.getHeight() * ChessGame.SCALE) / 2;
+        offsetX = Game.WIDTH / 2 - (boardImage.getWidth() * ChessGame.SCALE) /  2;
+        offsetY = Game.HEIGHT / 2 - (boardImage.getHeight() * ChessGame.SCALE) / 2;
 
         highlightX = -1;
         highlightY = -1;
@@ -50,19 +51,53 @@ public class ChessBoard {
     private void initBoard() {
 
         for (int i = 0; i < 8; i++) {
-
-            whitePieces.add(new Pawn(i, 6));
-
+            for (int j = 0; j < 8; j++) {
+                board[i][j] = null;
+            }
         }
+
+        initPlayer(blackPieces, true);
+        initPlayer(whitePieces, false);
+
     }
+
+    private void initPlayer(ArrayList<ChessPiece> player, boolean top) {
+        int pawnRow, kingRow = 0;
+        if (top) {
+            pawnRow = 1;
+            kingRow = 0;
+        } else {
+            pawnRow = 6;
+            kingRow = 7;
+        }
+
+        for (int i = 0; i < 8; i++) {
+            insertPiece(player, new Pawn(i, pawnRow), i, pawnRow);
+        }
+
+        insertPiece(player, new Rook(0, kingRow), 0, kingRow);
+        insertPiece(player, new Knight(1, kingRow), 1, kingRow);
+        insertPiece(player, new Bishop(2, kingRow), 2, kingRow);
+        insertPiece(player, new Queen(3, kingRow), 3, kingRow);
+        insertPiece(player, new King(4, kingRow), 4, kingRow);
+        insertPiece(player, new Bishop(5, kingRow), 5, kingRow);
+        insertPiece(player, new Knight(6, kingRow), 6, kingRow);
+        insertPiece(player, new Rook(7, kingRow), 7, kingRow);
+    }
+
+    private void insertPiece(ArrayList<ChessPiece> player, ChessPiece piece, int row, int col) {
+        board[col][row] = piece;
+        player.add(piece);
+    }
+
 
     public void draw(Graphics2D g) {
         g.drawImage(
-                board,
+                boardImage,
                 offsetX,
                 offsetY,
-                board.getWidth() * ChessGame.SCALE,
-                board.getHeight() * ChessGame.SCALE,
+                boardImage.getWidth() * ChessGame.SCALE,
+                boardImage.getHeight() * ChessGame.SCALE,
                 null);
 
         if (highlightX != -1 && highlightY != -1) {
@@ -75,7 +110,20 @@ public class ChessBoard {
                     null);
         }
 
+        // Draw all of white's pieces
         for (ChessPiece piece : whitePieces) {
+            BufferedImage img = piece.getIcon();
+            g.drawImage(
+                    img,
+                    offsetX + piece.getX() * TILE_WIDTH  * ChessGame.SCALE,
+                    offsetY + piece.getY() * TILE_WIDTH  * ChessGame.SCALE,
+                    img.getWidth() * ChessGame.SCALE,
+                    img.getHeight() * ChessGame.SCALE,
+                    null);
+        }
+
+        // Draw all of black's pieces;
+        for (ChessPiece piece : blackPieces) {
             BufferedImage img = piece.getIcon();
             g.drawImage(
                     img,

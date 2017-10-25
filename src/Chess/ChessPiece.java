@@ -6,8 +6,6 @@ import java.awt.image.BufferedImage;
 
 public abstract class ChessPiece {
 
-	private static final String BASE_PATH = "/Chess/";
-
 	/*
 
 		1. Piece location (row 1-8, col a-h[1-8])
@@ -26,10 +24,12 @@ public abstract class ChessPiece {
 
 	*/
 
+	private static final String BASE_PATH = "/Chess/Pieces/";
+
 	private BufferedImage icon;
 	protected int position[];
 
-	public ChessPiece(String imageName) {
+	public ChessPiece(String imageName, int x, int y) {
 
 		try {
 			icon = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + imageName));
@@ -38,15 +38,13 @@ public abstract class ChessPiece {
 		}
 
 		position = new int[2];
+		position[0] = x;
+		position[1] = y;
 	}
-
-
-
 
 	public void move(Move m) {
 
 		// TODO: update position
-
 	}
 	
 	public void capture(ChessPiece p) {

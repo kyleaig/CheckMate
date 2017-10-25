@@ -141,12 +141,12 @@ public class Game extends JPanel implements Runnable, KeyListener, MouseListener
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        gameStateManager.mouseClicked(e);
+        // gameStateManager.mouseClicked(e);
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        gameStateManager.mouseClicked(e);
     }
 
     @Override
