@@ -28,7 +28,5 @@ public abstract class ChessPiece {
 		 * }
 		 */
 
-
-		// add a comment
 	}
 }
