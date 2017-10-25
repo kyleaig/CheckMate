@@ -15,14 +15,20 @@ public class ChessBoard {
     private static final String BASE_PATH = "/Chess/";
     private static final int TILE_WIDTH = 11;
 
+    // Chess Board Images
     private BufferedImage boardImage;
-    private BufferedImage highlight;
+    private BufferedImage pieceHighlight;
+    private BufferedImage moveHighlight;
+    private BufferedImage invalidHighlight;
     private int offsetX;
     private int offsetY;
 
+
     private int highlightX;
     private int highlightY;
+    private boolean tileSelected;
 
+    // Chess Piece Objects
     private ArrayList<ChessPiece> whitePieces;
     private ArrayList<ChessPiece> blackPieces;
     private ChessPiece[][] board = new ChessPiece[8][8];
@@ -31,7 +37,9 @@ public class ChessBoard {
 
         try {
             boardImage = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "ChessBoard.png"));
-            highlight = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "Highlight.png"));
+            pieceHighlight = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "PieceHighlight.png"));
+            moveHighlight = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "SuccessHighlight.png"));
+            invalidHighlight = ImageIO.read(getClass().getResourceAsStream(BASE_PATH + "ErrorHighlight.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -102,11 +110,11 @@ public class ChessBoard {
 
         if (highlightX != -1 && highlightY != -1) {
             g.drawImage(
-                    highlight,
+                    pieceHighlight,
                     offsetX + TILE_WIDTH * ChessGame.SCALE * highlightX,
                     offsetY + TILE_WIDTH * ChessGame.SCALE * highlightY,
-                    highlight.getWidth() * ChessGame.SCALE,
-                    highlight.getHeight() * ChessGame.SCALE,
+                    pieceHighlight.getWidth() * ChessGame.SCALE,
+                    pieceHighlight.getHeight() * ChessGame.SCALE,
                     null);
         }
 
