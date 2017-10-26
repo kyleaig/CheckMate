@@ -1,14 +1,14 @@
 package Chess;
 
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public abstract class ChessPiece {
 
 	/*
-
-		1. Piece location (row 1-8, col a-h[1-8])
 		2. List of available legal moves
 			-- Maybe have a static function in a MoveCalc class
 				that can place the moves in an ArrayList<Move>
@@ -28,6 +28,8 @@ public abstract class ChessPiece {
 
 	private BufferedImage icon;
 	protected int position[];
+	
+	public ArrayList<Move> legal_moves = new ArrayList<Move>();
 
 	public ChessPiece(String imageName, int x, int y) {
 
@@ -55,6 +57,10 @@ public abstract class ChessPiece {
 
 	public BufferedImage getIcon() {
 		return icon;
+	}
+	
+	public int[] getPos() {
+		return position;
 	}
 
 	public int getX() {

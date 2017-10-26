@@ -5,6 +5,7 @@ import GameState.ChessGame;
 import Main.Game;
 
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -161,4 +162,15 @@ public class ChessBoard {
             System.out.println("Out of bounds");
         }
     }
+    
+	public void moveCalc(ArrayList<Move> move_arr, ChessPiece p) {
+		Move m = new Move(p.getPos());
+		if (p instanceof Chess.Pieces.Bishop) {
+			
+		} else { // Pawn
+			// Move up one row if the space above is empty and not off the board
+			if (board[p.getX()][p.getY() + 1] == null && p.getY() <= 6)
+				m.setToLoc(p.getX(), p.getY() + 1);
+		}
+	}
 }
