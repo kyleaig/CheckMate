@@ -29,7 +29,7 @@ public class ChessGame extends GameState {
     @Override
     public void update() {
 
-        // Handles things like turns
+        // TODO: Implement turn system, and probably A.I. Functuonality
 
     }
 
@@ -60,6 +60,8 @@ public class ChessGame extends GameState {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
         chessBoard.click();
+
     }
 }
