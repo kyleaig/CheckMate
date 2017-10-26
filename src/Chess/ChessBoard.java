@@ -66,7 +66,6 @@ public class ChessBoard {
 
         initPlayer(blackPieces, true);
         initPlayer(whitePieces, false);
-
     }
 
     private void initPlayer(ArrayList<ChessPiece> player, boolean top) {
