@@ -30,6 +30,7 @@ public abstract class ChessPiece {
 	protected int position[];
 	
 	public ArrayList<Move> legal_moves = new ArrayList<Move>();
+	public boolean white;
 
 	public ChessPiece(String imageName, int x, int y) {
 
@@ -42,6 +43,14 @@ public abstract class ChessPiece {
 		position = new int[2];
 		position[0] = x;
 		position[1] = y;
+	}
+	
+	public void setWhite(boolean b) {
+		white = b;
+	}
+	
+	public boolean isWhite() {
+		return white;
 	}
 
 	public void move(Move m) {

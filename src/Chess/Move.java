@@ -8,6 +8,11 @@ public class Move {
 		fromLoc = position;
 	}
 	
+	public Move(int[] position, int[] destination) {
+		fromLoc = position;
+		toLoc = destination;
+	}
+	
 	// From Location:
 	public void setFromLocX(int x) {
 		fromLoc[0] = x;
