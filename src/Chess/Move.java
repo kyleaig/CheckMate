@@ -4,7 +4,8 @@ public class Move {
 	int fromLoc[] = new int[2];
 	int toLoc[] = new int[2];
 
-	
-	// This is a comment!
-	
+	// TODO: Figure resolve conflict between two alternatives
+	int b = 0;
+//	int a = 0;
+
 }
